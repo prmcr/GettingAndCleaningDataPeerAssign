@@ -61,6 +61,7 @@ names(train.subject) <- c("SubjectID")
 
 # sapply(list(train.X,train.y,test.X,test.y,test.subject,train.subject),dim)
 
+## Assign feature names to columns of the data
 feature.desc <- read.table(file=feature.descfile,header=FALSE)
 names(test.X) <- feature.desc[,2]
 names(train.X) <- feature.desc[,2]
@@ -80,12 +81,12 @@ merged.data <- rbind(train.data,test.data)
 
 # names(merged.data)
 # dim(merged.data)
-
+print("Writing merged data")
 write.table(merged.data, file = "merged.train.test.data.txt")
 
 ## 2. Extracts only the measurements on the mean and standard deviation for each measurement. 
-# test.truncated.data <- test.data[,!is.na(c(1,1,1,str_match(names(test.X),"mean\\(\\)|std\\(\\)|Mean$")))]
 
+## Assumed 
 test.truncated.data <- test.data[,!is.na(c(1,1,1,str_match(names(test.X),"mean\\(\\)|std\\(\\)")))]
 test.truncated.X <- test.data[,!is.na(c(NA,NA,NA,str_match(names(test.X),"mean\\(\\)|std\\(\\)")))]
 test.trauncated.y <- test.truncated.data$ActivityID
@@ -102,18 +103,18 @@ merged.trauncated.y <- merged.truncated.data$ActivityID
 
 ## 3. Uses descriptive activity names to name the activities in the data set
 
-##Done before merging itself.
-merged.data$ActivityDescription
+## Done before merging itself.
+## Uncomment the line to check the activity descriptions of the observations
+### merged.data$ActivityDescription
 
 ## 4. Appropriately labels the data set with descriptive activity names. 
 
-## Done 
-names(merged.data)
+## Uncomment the following line to check the feature descriptions
+### names(merged.data)
 
 ## 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 
 new.data <- sapply(split(merged.data,list(merged.data$SubjectID,merged.data$ActivityDescription)),function(d) colMeans(d[,4:(dim(d)[2])]))
-str(new.data)
 
-# tmp.data <- split(test.datac[,3],list(sort(test.datac$SubjectID),test.datac$ActivityDescription))
-# str(tmp.data)
+## Uncomment to display the new independent tidy data
+### str(new.data)
