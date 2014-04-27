@@ -1,4 +1,4 @@
-setwd("~/Courses/DataScience/GettingAndCleaningData/week3Peer/")
+# setwd("~/Courses/DataScience/GettingAndCleaningData/week3Peer/")
 # install.packages("stringr")
 
 library("stringr")
